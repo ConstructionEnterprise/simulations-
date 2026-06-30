@@ -142,6 +142,12 @@ def box(ax, cx, cy, cz, hw, hd, hh, fc, ec="#1A1A1A", alpha=0.92):
 # SECTION 2 — STATE MACHINES
 # ═══════════════════════════════════════════════════════════════════════
 
+class RailSubsystem:
+    def __init__(self, y, x_min, x_max):
+        self.y     = y
+        self.x_min = x_min
+        self.x_max = x_max
+
 class OverheadGantry:
     def __init__(self):
         self.bridge_x=28.0; self.trolley_y=0.0; self.hook_z=HOOK_PARK_Z
@@ -209,11 +215,14 @@ class OverheadGantry:
 
 
 class CR6Robot:
-    def __init__(self,name,rail_y,home_x,work_x,atc_x,side):
-        self.name=name; self.rail_y=rail_y; self.x=home_x
+    def __init__(self,name,rail,home_x,work_x,atc_x,side):
+        self.name=name; self.rail=rail; self.x=home_x
         self.work_x=work_x; self.atc_x=atc_x; self.side=side
         self.state="PARKED_AT_ATC"; self._dwell=0; self.cycles=0
         self.tool_idx=0; self._active=False
+
+    @property
+    def rail_y(self): return self.rail.y
 
     def activate(self):
         if self.state=="PARKED_AT_ATC": self.state="TRAVELING_TO_WORK"; self._active=True
@@ -360,10 +369,12 @@ class IntegratedCell:
         self.tilt    = TiltTable()
 
         # CR6 robots — Rail System
-        self.A1 = CR6Robot("A1", RAIL_A_Y, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, +1)
-        self.A2 = CR6Robot("A2", RAIL_A_Y, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  +1)
-        self.B1 = CR6Robot("B1", RAIL_B_Y, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, -1)
-        self.B2 = CR6Robot("B2", RAIL_B_Y, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  -1)
+        self.rail_A = RailSubsystem(RAIL_A_Y, RAIL_X_MIN, RAIL_X_MAX)
+        self.rail_B = RailSubsystem(RAIL_B_Y, RAIL_X_MIN, RAIL_X_MAX)
+        self.A1 = CR6Robot("A1", self.rail_A, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, +1)
+        self.A2 = CR6Robot("A2", self.rail_A, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  +1)
+        self.B1 = CR6Robot("B1", self.rail_B, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, -1)
+        self.B2 = CR6Robot("B2", self.rail_B, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  -1)
         self.robots = [self.A1, self.A2, self.B1, self.B2]
 
         self.tick          = 0
