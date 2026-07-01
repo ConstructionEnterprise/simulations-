@@ -148,6 +148,19 @@ class RailSubsystem:
         self.x_min = x_min
         self.x_max = x_max
 
+class Tool:
+    def __init__(self, name):
+        self.name = name
+
+class ATCSubsystem:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.welder      = Tool("welder")
+        self.gripper     = Tool("gripper")
+        self.screwdriver = Tool("screwdriver")
+        self.suction     = Tool("suction")
+
 class OverheadGantry:
     def __init__(self):
         self.bridge_x=28.0; self.trolley_y=0.0; self.hook_z=HOOK_PARK_Z
@@ -371,11 +384,24 @@ class IntegratedCell:
         # CR6 robots — Rail System
         self.rail_A = RailSubsystem(RAIL_A_Y, RAIL_X_MIN, RAIL_X_MAX)
         self.rail_B = RailSubsystem(RAIL_B_Y, RAIL_X_MIN, RAIL_X_MAX)
+
+        # ATC (Automatic Tool Changer) subsystems — four instances, near/far per rail
+        self.atc_A_near = ATCSubsystem(ATC_NEAR_X, RAIL_A_Y)
+        self.atc_A_far  = ATCSubsystem(ATC_FAR_X,  RAIL_A_Y)
+        self.atc_B_near = ATCSubsystem(ATC_NEAR_X, RAIL_B_Y)
+        self.atc_B_far  = ATCSubsystem(ATC_FAR_X,  RAIL_B_Y)
+
         self.A1 = CR6Robot("A1", self.rail_A, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, +1)
         self.A2 = CR6Robot("A2", self.rail_A, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  +1)
         self.B1 = CR6Robot("B1", self.rail_B, ATC_NEAR_X, FIXED_CX-1.2, ATC_NEAR_X, -1)
         self.B2 = CR6Robot("B2", self.rail_B, ATC_FAR_X,  FIXED_CX+1.2, ATC_FAR_X,  -1)
         self.robots = [self.A1, self.A2, self.B1, self.B2]
+
+        # Robot's currently-mounted tool — defaults to welder, homed to its near/far ATC
+        self.A1.mounted_tool = self.atc_A_near.welder
+        self.A2.mounted_tool = self.atc_A_far.welder
+        self.B1.mounted_tool = self.atc_B_near.welder
+        self.B2.mounted_tool = self.atc_B_far.welder
 
         self.tick          = 0
         self.placed_walls  = []
@@ -816,6 +842,9 @@ if not os.path.exists(_CMD_FILE):
         pass
 
 _paused         = False   # True when "pause" command received
+_paused_by      = "all"   # target string that issued the stop ("all" = whole-cell/unattributed)
+_paused_at      = None    # master phase/waypoint at the moment _paused flipped true
+_last_error     = None    # last rejected/invalid command, overwritten each time (not accumulated)
 _force_one_step = False   # True after "step" command; clears after one tick fires
 _WRITE_EVERY    = 10      # write state.json every N animation frames
 _write_counter  = 0
@@ -843,8 +872,20 @@ def reset_sim(event):
 btn.on_clicked(reset_sim)
 
 
+def resolve_target(name, cell):
+    """Resolve a command's `target` field to a concrete cell attribute name.
+
+    Absent/"all" -> "all" (whole-cell, current default behavior, unchanged).
+    Any other name is looked up dynamically against `cell` so Pass 2 ATC
+    objects register automatically with no edit here. Unknown name -> None.
+    """
+    if name is None or name == "all":
+        return "all"
+    return name if getattr(cell, name, None) is not None else None
+
+
 def update(frame_num):
-    global _paused, _force_one_step, _write_counter, cell
+    global _paused, _paused_by, _paused_at, _last_error, _force_one_step, _write_counter, cell
 
     ax.clear(); ax.set_facecolor("white")
 
@@ -856,8 +897,21 @@ def update(frame_num):
         if _cmd is not None:
             _params = _cmd_data.get("params") or {}
             if _cmd == "pause":
-                _paused = True
+                _target_name = _params.get("target", "all")
+                _resolved = resolve_target(_target_name, cell)
+                if _resolved is None:
+                    _last_error = {
+                        "command": _cmd,
+                        "target":  _target_name,
+                        "reason":  "unknown target",
+                        "frame":   cell.tick,
+                    }
+                else:
+                    _paused = True
+                    _paused_by = _resolved
+                    _paused_at = cell._phase
             elif _cmd == "resume":
+                # Option A: resume is whole-cell only; no target field read or validated.
                 _paused = False
             elif _cmd == "reset":
                 cell = IntegratedCell()
@@ -892,6 +946,10 @@ def update(frame_num):
                 "master_phase": cell._phase,
                 "module_done":  cell.module_done,
                 "placed_walls": list(cell.placed_walls),
+                "paused":       _paused,
+                "_paused_by":   _paused_by,
+                "_paused_at":   _paused_at,
+                "_last_error":  _last_error,
                 "gantry": {
                     "state":     cell.gantry.state,
                     "cycles":    cell.gantry.cycles,
