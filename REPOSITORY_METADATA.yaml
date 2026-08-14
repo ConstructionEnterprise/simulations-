@@ -1,0 +1,97 @@
+schema_version: 1
+repository:
+  slug: ConstructionEnterprise/simulations-
+  name: ConstructionEnterprise Simulation Library
+  classification: simulation-library
+  status: implemented
+  visibility: public
+  canonical: true
+
+ownership:
+  business_owner: Construction Enterprises
+  technical_owner: Simulation Engineering
+  knowledge_owner: Construction Enterprises / Knowledge Systems
+  escalation_contact: Simulation Engineering review path
+
+lifecycle:
+  last_reviewed: 2026-08-14
+  review_cadence_days: 30
+  archive_policy: >-
+    The canonical library remains active. A simulation directory may be deprecated
+    only after its replacement, lineage, documentation references, and validation
+    status are recorded in the library index.
+
+enterprise_context:
+  purpose: >-
+    Provides the canonical history-preserving library for ConstructionEnterprise
+    industrial simulations and Digital Twin artifacts.
+  capabilities:
+    - simulation-library
+    - digital-twin-modeling
+    - industrial-cell-modeling
+    - validation-evidence
+    - lineage-preservation
+  domains:
+    - digital-twin
+    - robotics
+    - manufacturing
+    - factory-operations
+
+source_of_truth:
+  documentation:
+    primary:
+      title: CE: Forge
+      url: https://docs.google.com/document/d/18sLXbC8O3SypYwFSUUv4oMSs8FjOs07wlSUCB7x_w8c/edit
+    related:
+      - title: CE: Executive Summary
+        url: https://docs.google.com/document/d/1RtnZwt_dbqLR2FSsb2gNXslKz5k4499IWgqpSfPUIuw/edit
+      - title: FF: Repository Blueprint
+        url: https://docs.google.com/document/d/1w8UruwLZ8HybEaF0emZH9ge2TO3wqjsdGmJx5WrlupA/edit
+      - title: FF: Architecture Index
+        url: https://docs.google.com/document/d/1B_hQCchV9sjWfgw0uo-K3JZjPQPScBYEyJm_PiqxCAg/edit
+      - title: FF: Engineering Standards
+        url: https://docs.google.com/document/d/1YTmPNKLguXr3CIkc8joR8AW17SR0BsjAU_XSFERkmD8/edit
+      - title: FF: Google Docs ↔ GitHub Cross-Reference Map
+        url: https://docs.google.com/document/d/1erFSQrIO1vSJbduxgOCP_0Whu16MVhV-K6-uyBA7amE/edit
+
+relationships:
+  related_repositories:
+    - ConstructionEnterprise/CE_Forge
+    - ConstructionEnterprise/Factory_To_Foundation
+    - ConstructionEnterprise/Construction_Enterprises
+  interfaces:
+    - name: Simulation-to-Forge scenario contract
+      direction: bidirectional
+      provider: ConstructionEnterprise/CE_Forge
+      specification_url: https://docs.google.com/document/d/18sLXbC8O3SypYwFSUUv4oMSs8FjOs07wlSUCB7x_w8c/edit
+    - name: Simulation-to-Factory Foundation application contract
+      direction: outbound
+      consumer: ConstructionEnterprise/Factory_To_Foundation
+      specification_url: https://github.com/ConstructionEnterprise/Factory_To_Foundation
+
+repository_structure:
+  library_root: simulations/
+  index_file: simulations/INDEX.md
+  migration_manifest: MIGRATION_MANIFEST.md
+  required_per_simulation_file: SIMULATION_METADATA.yaml
+  archived_source_repositories: 12
+  preservation_rule: >-
+    Do not reorganize inherited source boundaries into semantic folders without an
+    approved migration plan that preserves lineage and updates the manifest.
+
+verification:
+  required_evidence:
+    - migration-lineage
+    - simulation-metadata
+    - governing-document-link
+    - runtime-requirement-record
+    - validation-result-or-known-limitation
+    - documentation-update
+  test_or_validation_entrypoint: Per-simulation; record in SIMULATION_METADATA.yaml.
+
+security:
+  data_classification: public-library
+  secrets_policy: no-secrets-in-repository
+  security_document: SECURITY.md
+  branch_protection_required: true
+  automated_governance_check_required: true

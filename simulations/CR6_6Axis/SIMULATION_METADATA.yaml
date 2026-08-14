@@ -1,0 +1,56 @@
+schema_version: 1
+simulation:
+  name: CR6_6Axis
+  directory: simulations/CR6_6Axis/
+  description: CR6 six-axis robot simulation artifact.
+  classification: robot-arm
+  lifecycle_status: reference
+  operational_status: unverified
+
+source_lineage:
+  source_repository: ConstructionEnterprise/CR6_6Axis
+  source_branch: main
+  migration_manifest: ../../MIGRATION_MANIFEST.md
+  preservation_rule: >-
+    This directory preserves the source-repository boundary imported into the
+    canonical Simulation Library. Do not relocate it for taxonomy purposes.
+
+documentation:
+  primary:
+    title: CE: Forge
+    url: https://docs.google.com/document/d/18sLXbC8O3SypYwFSUUv4oMSs8FjOs07wlSUCB7x_w8c/edit
+  related:
+    - title: CE: Executive Summary
+      url: https://docs.google.com/document/d/1RtnZwt_dbqLR2FSsb2gNXslKz5k4499IWgqpSfPUIuw/edit
+    - title: FF: Google Docs ↔ GitHub Cross-Reference Map
+      url: https://docs.google.com/document/d/1erFSQrIO1vSJbduxgOCP_0Whu16MVhV-K6-uyBA7amE/edit
+
+relationships:
+  related_repositories:
+    - ConstructionEnterprise/simulations-
+    - ConstructionEnterprise/CE_Forge
+    - ConstructionEnterprise/Factory_To_Foundation
+  physical_system: not-assessed
+  interfaces:
+    - name: Factory Foundation contract
+      status: not-assessed
+    - name: CE Forge scenario contract
+      status: not-assessed
+
+runtime:
+  entrypoint: not-assessed
+  dependencies: not-assessed
+  environment: not-assessed
+
+verification:
+  status: not-assessed
+  evidence: >-
+    Directory presence and history preservation do not establish runtime,
+    scenario, application, or physical-system validation.
+  last_reviewed: 2026-08-14
+  review_cadence_days: 90
+
+ownership:
+  business_owner: Construction Enterprises
+  technical_owner: Simulation Engineering
+  knowledge_owner: Construction Enterprises / Knowledge Systems
