@@ -1,0 +1,20 @@
+schema_version: 1
+library:
+  name: ConstructionEnterprise Simulation Library
+  repository: ConstructionEnterprise/simulations-
+  current_version: 0.1.0
+  versioning_policy: >-
+    A library version represents a reviewed repository-level engineering record.
+    It does not certify all simulation artifacts as runtime or physically validated.
+releases:
+  - version: 0.1.0
+    date: 2026-08-14
+    status: internal-review
+    scope:
+      - repository-identity
+      - migration-provenance
+      - simulation-inventory
+      - simulation-metadata
+    validation_claim: >-
+      Governance and provenance records validated; simulation runtime and
+      physical-system performance not assessed by this release.
