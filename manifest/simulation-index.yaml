@@ -1,0 +1,102 @@
+schema_version: 1
+library:
+  repository: ConstructionEnterprise/simulations-
+  inventory_source: simulations/INDEX.md
+  preservation_rule: Source directory boundaries are provenance and remain unchanged.
+simulations:
+  - id: CE-SIM-CE_Intergrated_Cell_V1_3
+    directory: simulations/CE_Intergrated_Cell_V1_3/
+    source_repository: ConstructionEnterprise/CE_Intergrated_Cell_V1_3
+    classification: integrated-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/CE_Intergrated_Cell_V1_3/SIMULATION_METADATA.yaml
+  - id: CE-SIM-CR6_6Axis
+    directory: simulations/CR6_6Axis/
+    source_repository: ConstructionEnterprise/CR6_6Axis
+    classification: robot-arm
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/CR6_6Axis/SIMULATION_METADATA.yaml
+  - id: CE-SIM-CR6_6axis_Object_Tracking
+    directory: simulations/CR6_6axis_Object_Tracking/
+    source_repository: ConstructionEnterprise/CR6_6axis_Object_Tracking
+    classification: robot-vision-and-object-tracking
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/CR6_6axis_Object_Tracking/SIMULATION_METADATA.yaml
+  - id: CE-SIM-CR6_V08_Dual_Robot_Cell
+    directory: simulations/CR6_V08_Dual_Robot_Cell/
+    source_repository: ConstructionEnterprise/CR6_V08_Dual_Robot_Cell
+    classification: dual-robot-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/CR6_V08_Dual_Robot_Cell/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Dual_CR6_Cell
+    directory: simulations/Dual_CR6_Cell/
+    source_repository: ConstructionEnterprise/Dual_CR6_Cell
+    classification: dual-robot-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Dual_CR6_Cell/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Dual_Robot_Cell_Jig_Frame
+    directory: simulations/Dual_Robot_Cell_Jig_Frame/
+    source_repository: ConstructionEnterprise/Dual_Robot_Cell_Jig_Frame
+    classification: jig-frame-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Dual_Robot_Cell_Jig_Frame/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Dual_Robot_Jig_Frame_V1_1
+    directory: simulations/Dual_Robot_Jig_Frame_V1_1/
+    source_repository: ConstructionEnterprise/Dual_Robot_Jig_Frame_V1_1
+    classification: jig-frame-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Dual_Robot_Jig_Frame_V1_1/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Factory_Rail_v2
+    directory: simulations/Factory_Rail_v2/
+    source_repository: ConstructionEnterprise/Factory_Rail_v2
+    classification: factory-rail-and-material-flow
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Factory_Rail_v2/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Integrated-_Cell_V2_6-
+    directory: simulations/Integrated-_Cell_V2_6-/
+    source_repository: ConstructionEnterprise/Integrated-_Cell_V2_6-
+    classification: integrated-cell
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Integrated-_Cell_V2_6-/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Module_Assembly_V1
+    directory: simulations/Module_Assembly_V1/
+    source_repository: ConstructionEnterprise/Module_Assembly_V1
+    classification: module-assembly
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Module_Assembly_V1/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Overhead_Gantry_V1
+    directory: simulations/Overhead_Gantry_V1/
+    source_repository: ConstructionEnterprise/Overhead_Gantry_V1
+    classification: overhead-gantry
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Overhead_Gantry_V1/SIMULATION_METADATA.yaml
+  - id: CE-SIM-Rail_System_V1
+    directory: simulations/Rail_System_V1/
+    source_repository: ConstructionEnterprise/Rail_System_V1
+    classification: rail-system
+    lifecycle_status: reference
+    validation_status: not-assessed
+    publication_classification: public-summary-pending-review
+    metadata: simulations/Rail_System_V1/SIMULATION_METADATA.yaml
